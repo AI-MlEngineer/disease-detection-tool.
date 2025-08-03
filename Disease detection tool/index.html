@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Detection Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #003366;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #003366;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #questionBox {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border: 2px solid #003366;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.2rem;
+            margin: 0.5rem;
+            border: none;
+            background-color: #003366;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #00509e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Disease Detection Tool
+    </header>
+
+    <div id="questionBox">
+        <p id="question">Do you have a high fever?</p>
+        <button class="btn" onclick="nextStep('yes')">Yes</button>
+        <button class="btn" onclick="nextStep('no')">No</button>
+    </div>
+
+    <script>
+        let step = 0;
+
+        function nextStep(answer) {
+            const q = document.getElementById('question');
+
+            if (step === 0) {
+                if (answer === 'yes') {
+                    step = 1;
+                    q.innerText = "Do you have abdominal pain or diarrhea?";
+                } else {
+                    step = 10;
+                    q.innerText = "Do you feel frequent urination and fatigue?";
+                }
+            }
+            else if (step === 1) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>Typhoid</strong>.<br><br><em>Prescription:</em> Take antibiotics such as ciprofloxacin or azithromycin as prescribed by your doctor. Drink plenty of fluids.";
+                    endDiagnosis();
+                } else {
+                    step = 2;
+                    q.innerText = "Do you have chest pain or persistent cough with blood?";
+                }
+            }
+            else if (step === 2) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>Tuberculosis</strong>.<br><br><em>Prescription:</em> Begin anti-tubercular therapy (ATT) including isoniazid, rifampicin, and pyrazinamide. Strictly follow doctor's schedule.";
+                    endDiagnosis();
+                } else {
+                    step = 3;
+                    q.innerText = "Do you have weight loss and recurrent infections?";
+                }
+            }
+            else if (step === 3) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>AIDS</strong>.<br><br><em>Prescription:</em> Antiretroviral therapy (ART) should be started immediately. Regular medical monitoring is essential.";
+                    endDiagnosis();
+                } else {
+                    q.innerHTML = "<strong>Consult a doctor for further diagnosis.</strong>";
+                    endDiagnosis();
+                }
+            }
+            else if (step === 10) {
+                if (answer === 'yes') {
+                    step = 11;
+                    q.innerText = "Do you often feel thirsty and have blurred vision?";
+                } else {
+                    step = 20;
+                    q.innerText = "Do you feel severe back pain and nausea?";
+                }
+            }
+            else if (step === 11) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>Diabetes</strong>.<br><br><em>Prescription:</em> Take insulin or oral hypoglycemics as prescribed. Follow a controlled diet and exercise regularly.";
+                    endDiagnosis();
+                } else {
+                    q.innerHTML = "<strong>Consult a doctor for further diagnosis.</strong>";
+                    endDiagnosis();
+                }
+            }
+            else if (step === 20) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>Kidney Stone</strong>.<br><br><em>Prescription:</em> Take pain relievers, stay hydrated. Lithotripsy or surgery may be required in severe cases.";
+                    endDiagnosis();
+                } else {
+                    step = 21;
+                    q.innerText = "Do you experience chest tightness and shortness of breath?";
+                }
+            }
+            else if (step === 21) {
+                if (answer === 'yes') {
+                    q.innerHTML = "You might have <strong>Heart Disease</strong>.<br><br><em>Prescription:</em> Follow a low-fat diet, avoid stress, and take medications such as beta-blockers, aspirin, or statins as prescribed.";
+                    endDiagnosis();
+                } else {
+                    q.innerHTML = "<strong>Consult a doctor for further diagnosis.</strong>";
+                    endDiagnosis();
+                }
+            }
+        }
+
+        function endDiagnosis() {
+            const box = document.getElementById('questionBox');
+            box.innerHTML += '<br><br><button class="btn" onclick="location.reload()">Restart</button>';
+        }
+    </script>
+</body>
+</html>
